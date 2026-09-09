@@ -1,138 +1,201 @@
+Voici une proposition de **README structuré et propre** pour ton repo `soundshine-bot`.
+
+Tu peux le copier-coller directement dans `README.md` et l’ajuster ensuite.
+
+---
+
+```markdown
 # soundSHINE Bot
 
-Bot Discord pour diffuser soundSHINE Radio dans un Stage Channel, exposer des metriques via une API Express et automatiser quelques actions autour de la station.
+Bot Discord officiel de **soundSHINE Radio**.  
+Il diffuse le stream radio dans un Stage Channel, gère les demandes de morceaux et expose une API légère pour le monitoring et la synchronisation avec RadioDJ.
 
-## Apercu
+🌐 [soundshineradio.com](https://soundshineradio.com)
 
-- Commandes slash organisees par domaines: radio, station, requests, systeme, fun.
-- Lecture du stream dans un Stage Channel et suivi d'etat du bot.
-- API HTTP securisee pour la sante, les logs, les alertes, les metriques et la mise a jour de playlist.
-- Suite de tests Vitest et scripts utilitaires de developpement.
+---
+
+## Fonctionnalités
+
+- Diffusion du stream radio dans un **Stage Channel** Discord
+- Système de **requests** (demande, édition, liste, suppression)
+- Commandes de gestion de la station (`/station`)
+- API HTTP sécurisée (santé, mise à jour playlist…)
+- Architecture modulaire et testée (Vitest)
+- Intégration avec **RadioDJ**
+
+---
 
 ## Structure du projet
 
 ```text
 .
-|-- src/
-|   |-- api/        # Serveur Express, middlewares et routes HTTP
-|   |-- bot/        # Client Discord, commandes, events, handlers et taches
-|   |-- core/       # Services metier et cycle de vie de l'application
-|   |-- tests/      # Tests Vitest
-|   `-- utils/      # Utilitaires partages et acces DB
-|-- scripts/        # Scripts dev, infra, git et outils
-|-- docs/           # Documentation additionnelle
-`-- package.json
+├── src/
+│   ├── api/          # Serveur Express + routes HTTP
+│   ├── bot/          # Client Discord, commandes, events, services, tasks
+│   ├── core/         # Logique métier et cycle de vie
+│   ├── config/       # Configurations (ESLint, Vitest…)
+│   ├── data/         # Accès données
+│   ├── shared/       # Utilitaires partagés
+│   └── tests/        # Tests Vitest
+├── scripts/          # Scripts de développement et déploiement
+├── docs/             # Documentation additionnelle
+└── package.json
 ```
 
-Point d'entree de l'application: [`src/index.js`](/C:/Users/noordotda/Documents/Github/discord-bot/src/index.js)
+Point d’entrée : `src/index.js`
 
-## Prerequis
+---
+
+## Prérequis
 
 - Node.js 18+
 - npm
-- Un bot Discord configure avec les permissions adaptees
+- Un bot Discord configuré avec les permissions nécessaires
+- Accès à RadioDJ (API)
+
+---
 
 ## Configuration
 
-Le projet charge `.env` puis `.env.<env>` comme `.env.dev` ou `.env.prod`.
+Le bot charge les variables d’environnement dans cet ordre :
+1. `.env`
+2. `.env.<env>` (ex: `.env.dev`, `.env.prod`)
 
-Variables minimales:
+### Variables obligatoires
 
 ```env
-DISCORD_TOKEN=...
-ADMIN_ROLE_ID=...
-VOICE_CHANNEL_ID=...
-PLAYLIST_CHANNEL_ID=...
-REQ_ROLE_ID=...
-STREAM_URL=...
-JSON_URL=...
+DISCORD_TOKEN=
+ADMIN_ROLE_ID=
+VOICE_CHANNEL_ID=
+PLAYLIST_CHANNEL_ID=
+REQ_ROLE_ID=
+STREAM_URL=
+JSON_URL=
 API_PORT=3000
-API_TOKEN=...
+API_TOKEN=
 ```
 
-Variables utiles selon les modules:
+### Variables optionnelles / utiles
 
 ```env
-CLIENT_ID=...
-GUILD_ID=...
-DEV_GUILD_ID=...
+CLIENT_ID=
+GUILD_ID=
+DEV_GUILD_ID=
 BOT_ROLE_NAME=soundSHINE
 LOG_LEVEL=info
-UNSPLASH_ACCESS_KEY=...
-RADIODJ_API_URL=...
-RADIODJ_API_KEY=...
+UNSPLASH_ACCESS_KEY=
+RADIODJ_API_URL=
+RADIODJ_API_KEY=
 ```
 
-## Demarrage
+---
+
+## Installation & démarrage
 
 ```bash
+# Installation des dépendances
 npm install
+
+# Mode développement
 npm run dev
-```
 
-Production:
-
-```bash
+# Mode production
 npm run prod
 ```
 
+---
+
 ## Scripts utiles
 
-```bash
-npm run deploy:dev
-npm run deploy:global
-npm run clear:dev
-npm run clear:global
-npm run db:deploy
-npm run lint
-npm run lint:fix
-npm test
-npm run context:md
-```
+| Commande              | Description                          |
+|-----------------------|--------------------------------------|
+| `npm run deploy:dev`  | Déploie les commandes (guild de dev) |
+| `npm run deploy:global` | Déploie les commandes globalement  |
+| `npm run clear:dev`   | Supprime les commandes de dev        |
+| `npm run clear:global`| Supprime les commandes globales      |
+| `npm run db:deploy`   | Déploie / met à jour la base         |
+| `npm run lint`        | Vérifie le code                      |
+| `npm run lint:fix`   | Corrige automatiquement le code      |
+| `npm test`            | Lance les tests Vitest               |
+| `npm run context:md`  | Génère le contexte Markdown          |
 
-Les configurations canoniques sont:
-
-- [`src/config/eslint.config.js`](/C:/Users/noordotda/Documents/Github/discord-bot/src/config/eslint.config.js)
-- [`src/config/vitest.config.js`](/C:/Users/noordotda/Documents/Github/discord-bot/src/config/vitest.config.js)
+---
 
 ## Commandes Discord
-- `/help`
-- `/ping`
-- `/radio nowplaying`
-- `/station schedule`
-- `/request ask`
-- `/request edit`
-- `/drink`
-- `/getwallpaper`
 
-## Commandes Discord (admin radio + modération)
-- `/request delete`
-- `/request list`
-- `/station stats`
-- `/station stream-config`
+### Utilisateurs
+
+| Commande              | Description                          |
+|-----------------------|--------------------------------------|
+| `/help`               | Affiche l’aide                       |
+| `/ping`               | Vérifie la latence du bot            |
+| `/radio nowplaying`   | Affiche le morceau en cours          |
+| `/station schedule`   | Affiche le planning                  |
+| `/request ask`        | Demander un morceau                  |
+| `/request edit`       | Modifier une demande                 |
+| `/drink`              | Commande fun                         |
+| `/getwallpaper`       | Récupère un wallpaper                |
+
+### Admin / Modération radio
+
+| Commande                    | Description                              |
+|-----------------------------|------------------------------------------|
+| `/request delete`           | Supprimer une demande                    |
+| `/request list`             | Lister les demandes                      |
+| `/station stats`            | Statistiques de la station               |
+| `/station stream-config`    | Configuration du stream                  |
+
+> **Note** : Certaines commandes (ex: historique, silence, etc.) peuvent être présentes dans le code mais non listées ici. À mettre à jour selon l’état réel.
+
+---
 
 ## API HTTP
 
-Base locale par defaut: `http://localhost:3000`
+Base URL par défaut : `http://localhost:3000`
 
-- `GET /`
-- `GET /v1/health`
-- `POST /v1/playlist-update`
+| Méthode | Endpoint                 | Description                     |
+|---------|--------------------------|---------------------------------|
+| `GET`   | `/`                      | Racine                          |
+| `GET`   | `/v1/health`             | Santé du bot                    |
+| `POST`  | `/v1/playlist-update`    | Mise à jour de la playlist      |
 
-Exemple:
+Exemple :
 
 ```bash
 curl http://localhost:3000/v1/health
 ```
 
-## Notes de maintenance
+L’API est protégée par le token défini dans `API_TOKEN`.
 
-- Le dossier `scripts/` fait partie du projet et ne doit plus etre ignore par Git.
-- Les anciennes configs ESLint/Jest ont ete retirees au profit des configs actuelles sous `src/config/`.
-- Les artefacts generes sous `src/node_modules/` sont maintenant ignores.
+---
 
-## Documentation associee
+## Roadmap
 
-- [`docs/SECURITY.md`](/C:/Users/noordotda/Documents/Github/discord-bot/docs/SECURITY.md)
-- [`scripts/README.md`](/C:/Users/noordotda/Documents/Github/discord-bot/scripts/README.md)
-- [`src/tests/README.md`](/C:/Users/noordotda/Documents/Github/discord-bot/src/tests/README.md)
+- [ ] Dashboard web léger de monitoring (statut, now playing, logs, stats simples)
+- [ ] Commande `/request top10` (morceaux les plus demandés)
+- [ ] Amélioration de l’historique des morceaux
+- [ ] Documentation API plus complète
+
+---
+
+## Licence
+
+Projet privé / usage interne soundSHINE Radio.
+
+---
+
+## Liens
+
+- Site : [soundshineradio.com](https://soundshineradio.com)
+- Repo : [github.com/dlp0x/soundshine-bot](https://github.com/dlp0x/soundshine-bot)
+```
+
+---
+
+### Quelques conseils
+
+- Remplace les commandes dans les tableaux par celles réellement présentes dans le code (surtout si tu as encore `/radio history`, `/silence`, etc.).
+- Tu peux ajouter des badges (Node, Discord, etc.) en haut si tu veux un rendu plus pro.
+- Si tu veux une version encore plus courte ou plus marketing, dis-le-moi.
+
+Tu veux que je te fasse aussi une version plus courte / plus “vitrine” ?
