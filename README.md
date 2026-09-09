@@ -1,10 +1,3 @@
-Voici une proposition de **README structuré et propre** pour ton repo `soundshine-bot`.
-
-Tu peux le copier-coller directement dans `README.md` et l’ajuster ensuite.
-
----
-
-```markdown
 # soundSHINE Bot
 
 Bot Discord officiel de **soundSHINE Radio**.  
@@ -145,8 +138,6 @@ npm run prod
 | `/station stats`            | Statistiques de la station               |
 | `/station stream-config`    | Configuration du stream                  |
 
-> **Note** : Certaines commandes (ex: historique, silence, etc.) peuvent être présentes dans le code mais non listées ici. À mettre à jour selon l’état réel.
-
 ---
 
 ## API HTTP
@@ -188,14 +179,3 @@ Projet privé / usage interne soundSHINE Radio.
 
 - Site : [soundshineradio.com](https://soundshineradio.com)
 - Repo : [github.com/dlp0x/soundshine-bot](https://github.com/dlp0x/soundshine-bot)
-```
-
----
-
-### Quelques conseils
-
-- Remplace les commandes dans les tableaux par celles réellement présentes dans le code (surtout si tu as encore `/radio history`, `/silence`, etc.).
-- Tu peux ajouter des badges (Node, Discord, etc.) en haut si tu veux un rendu plus pro.
-- Si tu veux une version encore plus courte ou plus marketing, dis-le-moi.
-
-Tu veux que je te fasse aussi une version plus courte / plus “vitrine” ?
